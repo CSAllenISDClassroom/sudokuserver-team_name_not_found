@@ -32,7 +32,42 @@
 */
 
 import Foundation
+//codermerlin.com/wiki/index.php/W3911_Sudoku_Server
+struct Position: Codable {
+    let x: Int
+    let y: Int
+}
 
+struct Cell: Codable {
+    let position: Position
+    let value: Int?
+}
+struct Row: Codable {
+    let cells: [Cell]
+
+    init(y: Int) {
+        var cells = [Cell]()
+        for x in 0 ..< 9 {
+            cells.append(Cell(position: Position(x:x, y:y), value: x+1)) //it kinda works but we need to make a valid board
+        }
+        self.cells = cells
+    }
+}
+
+struct Board: Codable {
+    let board: [Row]
+
+    init() {
+        var board = [Row]()
+        for y in 0 ..< 9 {
+            board.append(Row(y:y))
+        }
+        self.board = board
+    }
+}
+//end sponsorship
+
+/* old code, use for reference i guess
 public class Board {
 
     struct Constants {
@@ -141,7 +176,7 @@ public class Board {
         
     } 
 }
-
+*/
 
 
 /*let falseBoard = Board()
