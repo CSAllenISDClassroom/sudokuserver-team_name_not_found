@@ -28,7 +28,8 @@ func routes(_ app: Application) throws {
         
         return "{\"id\": \(boards.count-1)}"
     }
-    
+
+    //returns cells from given id in json format
     app.get("games", ":id", "cells") { req -> String in
         guard let id = req.parameters.get("id", as: Int.self) else {
             throw Abort(.badRequest)
@@ -41,7 +42,33 @@ func routes(_ app: Application) throws {
             fatalError("Failed to encode data into json.")
         }
         return "\(json)"
-    }.description("200 OK") 
+    }.description("200 OK")
+
+    //places specified value at given y and x
+    app.put("games", ":id", "cells", ":y", ":x", ":value") { req -> String in
+        guard let id = req.parameters.get("id", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+        guard let y = req.parameters.get("y", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+        guard let x = req.parameters.get("x", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+        guard let value = req.parameters.get("value", as: Int.self) else {
+            throw Abort(.badRequest)
+        }
+        if y > 8 || y < 0 || x > 8 || x < 0 || value > 9 || value < 1 {
+            throw Abort(.badRequest)
+        }
+        if id >= boards.count {
+            throw Abort(.badRequest)
+        }
+
+        //do stuff here i, will, will fix it later
+        
+        return ""
+    }
 }
 /* this isn't needed right now, it should return a boolean once we add it back
 func testBoard(_ board: Board) -> String {
