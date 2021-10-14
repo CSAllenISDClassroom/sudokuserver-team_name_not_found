@@ -41,9 +41,7 @@ func routes(_ app: Application) throws {
             fatalError("Failed to encode data into json.")
         }
         return "\(json)"
-    }.description("200 OK")
-    
-    
+    }.description("200 OK") 
 }
 /* this isn't needed right now, it should return a boolean once we add it back
 func testBoard(_ board: Board) -> String {
