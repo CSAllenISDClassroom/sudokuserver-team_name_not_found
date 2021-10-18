@@ -19,7 +19,7 @@ x-shared_environment: &shared_environment
 
 services:
   app:
-    image: sudoku-server:latest
+    image: sudoku-app:latest
     build:
       context: .
     environment:
