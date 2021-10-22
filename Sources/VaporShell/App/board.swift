@@ -34,8 +34,8 @@
 import Foundation
 //codermerlin.com/wiki/index.php/W3911_Sudoku_Server
 struct Position: Codable {
-    let x: Int
-    let y: Int
+    let boxIndex: Int
+    let cellIndex: Int
 }
 
 struct Cell: Codable {
@@ -45,10 +45,10 @@ struct Cell: Codable {
 struct Row: Codable {
     let cells: [Cell]
 
-    init(y: Int) {
+    init(cellIndex: Int) {
         var cells = [Cell]()
-        for x in 0 ..< 9 {
-            cells.append(Cell(position: Position(x:x, y:y), value: x+1)) //it kinda works but we need to make a valid board
+        for boxIndex in 0 ..< 9 {
+            cells.append(Cell(position: Position(boxIndex:boxIndex, cellIndex:cellIndex), value: boxIndex+1)) //it kinda works but we need to make a valid board
         }
         self.cells = cells
     }
@@ -59,8 +59,8 @@ struct Board: Codable {
 
     init() {
         var board = [Row]()
-        for y in 0 ..< 9 {
-            board.append(Row(y:y))
+        for cellIndex in 0 ..< 9 {
+            board.append(Row(cellIndex:cellIndex))
         }
         self.board = board
     }
