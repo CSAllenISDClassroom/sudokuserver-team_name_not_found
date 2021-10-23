@@ -2,8 +2,6 @@ import Vapor
 import Foundation
 
 var boards = [Board]()
-//json stuff
-let board = Board()
 let encoder = JSONEncoder()
 
 struct ResponseData : Content {
@@ -24,7 +22,7 @@ func routes(_ app: Application) throws {
 
     //returns ID for a new board
     app.post("games") { req -> String in
-        boards.append(Board())
+        boards.append(Board(difficulty:4))
 
         return "{\"id\": \(boards.count-1)}"
     }.description("201 Created")
@@ -37,14 +35,14 @@ func routes(_ app: Application) throws {
         if id >= boards.count {
             throw Abort(.badRequest, reason: ("This ID has not been created yet."))
         }
-        guard let data = try? encoder.encode(board),
+        guard let data = try? encoder.encode(boards[id]),
               let json = String(data: data, encoding: .utf8) else {
             fatalError("Failed to encode data into json.")
         }
         return "\(json)"
     }.description("200 OK")
 
-    //places specified value at given y and x
+    //places specified value at given cellIndex and boxIndex
     app.put("games", ":id", "cells", ":cellIndex", ":boxIndex", ":value") { req -> String in
         guard let id = req.parameters.get("id", as: Int.self) else {
             throw Abort(.badRequest, reason: ("The ID you entered does not exist."))
