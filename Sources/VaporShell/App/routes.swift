@@ -62,7 +62,7 @@ func routes(_ app: Application) throws {
     }.description("200 OK")
 
     //places specified value at given cellIndex and boxIndex
-    app.put("games", ":id", "cells", ":cellIndex", ":boxIndex", ":value") { req -> String in
+    app.put("games", ":id", "cells", ":boxIndex", ":cellIndex", ":value") { req -> String in
         guard let id = req.parameters.get("id", as: Int.self) else {
             throw Abort(.badRequest, reason: ("The ID you entered does not exist."))
         }
