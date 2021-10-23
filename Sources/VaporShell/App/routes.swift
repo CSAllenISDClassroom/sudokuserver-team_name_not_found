@@ -22,8 +22,27 @@ func routes(_ app: Application) throws {
 
     //returns ID for a new board
     app.post("games") { req -> String in
-        boards.append(Board(difficulty:4))
+        guard let difficultyString = req.query[String.self, at: "difficulty"] else {
+            throw Abort(.badRequest, reason: "Must specify difficulty (easy, medium, hard, hell)")
+        }
+        print("attempting to create board with difficulty \(difficultyString)")
+        var difficulty : Int
+        switch difficultyString {
+        case "easy":
+            difficulty = 1
+        case "medium":
+            difficulty = 2
+        case "hard":
+            difficulty = 3
+        case "hell":
+            difficulty = 4
+        default:
+            throw Abort(.badRequest, reason: "Difficulty must be easy, medium, hard, or hell")
+        }
+        boards.append(Board(difficulty:difficulty))
 
+        print("created board with id \(boards.count-1) with a difficulty of \(difficultyString) (\(difficulty))")
+        
         return "{\"id\": \(boards.count-1)}"
     }.description("201 Created")
 
