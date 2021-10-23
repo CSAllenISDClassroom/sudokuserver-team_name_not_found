@@ -1,38 +1,6 @@
-// Program by Garrett Fundis, Enzo Norton-Mitchell, William Jackson, Samuel Steele
-
-
-
-
-
-/*
-
- Task 1: Printing layout correctly
-   // Subs-square visual seapartions of a 9x9 into 3
-
- Task 2: Valitdation
-   // Row iteration: 1 - 9 only
-   // Column iteration: 1 - 9 only
-   // 3x3 subsquare: 1- 9 only
-
-*/
-
-/*
-
- For Loops & Control Flows
-  https://docs.swift.org/swift-book/LanguageGuide/ControlFlow.html
-  https://www.avanderlee.com/swift/loops-swift/
-  https://learnappmaking.com/swift-where-how-to/
-
- Collections
-  https://docs.swift.org/swift-book/LanguageGuide/CollectionTypes.html
-
- Set Documentation
-  https://developer.apple.com/documentation/swift/set
-
-*/
+//Program by William Jackson, Garrett Fundis, Enzo Norton-Mitchell, Samuel Steele
 
 import Foundation
-//codermerlin.com/wiki/index.php/W3911_Sudoku_Server
 struct Position: Codable {
     let boxIndex: Int
     let cellIndex: Int
@@ -48,14 +16,14 @@ struct Row: Codable {
     init(cellIndex: Int) {
         var cells = [Cell]()
         for boxIndex in 0 ..< 9 {
-            cells.append(Cell(position: Position(boxIndex:boxIndex, cellIndex:cellIndex), value: boxIndex+1)) //it kinda works but we need to make a valid board
+            cells.append(Cell(position: Position(boxIndex:boxIndex, cellIndex:cellIndex), value: boxIndex+1))
         }
         self.cells = cells
     }
 }
 
 struct Board: Codable {
-    let board: [Row]
+    var board: [Row]
 
     init(difficulty:Int) { //difficulty needs to be 1-4 (easy, normal, hard, hell)
         var board = [Row]()
@@ -76,7 +44,7 @@ struct Board: Codable {
     }
 }
 
-// old code, using this to generate new board
+//old code, using this to generate new board
 //it's not efficient but it works!
 //"be as lazy as possible" -Professor David Ben-Yakkov
 public class OldBoard {
